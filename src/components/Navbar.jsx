@@ -1,7 +1,9 @@
 import login from '../assets/user.png'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 const Navbar = () => {
+   const { pathname } = useLocation()
+   console.log(pathname)
    const links = (
       <>
          <li>
@@ -16,7 +18,13 @@ const Navbar = () => {
       </>
    )
    return (
-      <div className="navbar px-0 bg-base-100">
+      <div
+         className={`navbar px-0 ${
+            pathname == '/auth/login' || pathname == '/auth/register'
+               ? 'bg-[#f3f3f3]'
+               : 'bg-base-100'
+         }`}
+      >
          <div className="navbar-start">
             <div className="dropdown">
                <div
@@ -53,9 +61,12 @@ const Navbar = () => {
          </div>
          <div className="navbar-end">
             <img className="w-10" src={login} alt="" />
-            <button className="btn bg-[#403f3f] text-white text-xl font-semibold py-1 px-6 rounded-none ml-2">
+            <Link
+               to="/auth/login"
+               className="btn bg-[#403f3f] text-white text-xl font-semibold py-1 px-6 rounded-none ml-2"
+            >
                Login
-            </button>
+            </Link>
          </div>
       </div>
    )

@@ -1,9 +1,13 @@
+import { useContext } from 'react'
 import login from '../assets/user.png'
 import { Link, useLocation } from 'react-router-dom'
+import { AuthContext } from '../provider/AuthProvider'
 
 const Navbar = () => {
    const { pathname } = useLocation()
-   console.log(pathname)
+
+   const { user, loading, signOutUser } = useContext(AuthContext)
+   // console.log(user)
    const links = (
       <>
          <li>
@@ -17,6 +21,7 @@ const Navbar = () => {
          </li>
       </>
    )
+
    return (
       <div
          className={`navbar px-0 ${
@@ -26,6 +31,12 @@ const Navbar = () => {
          }`}
       >
          <div className="navbar-start">
+            {loading ? (
+               <span className="loading loading-spinner loading-lg"></span>
+            ) : (
+               <div className="hidden md:block">{user?.email}</div>
+            )}
+
             <div className="dropdown">
                <div
                   tabIndex={0}
@@ -61,12 +72,21 @@ const Navbar = () => {
          </div>
          <div className="navbar-end">
             <img className="w-10" src={login} alt="" />
-            <Link
-               to="/auth/login"
-               className="btn bg-[#403f3f] text-white text-xl font-semibold py-1 px-6 rounded-none ml-2"
-            >
-               Login
-            </Link>
+            {user ? (
+               <button
+                  onClick={signOutUser}
+                  className="btn bg-[#403f3f] text-white text-xl font-semibold py-1 px-6 rounded-none ml-2"
+               >
+                  Log-Out
+               </button>
+            ) : (
+               <Link
+                  to="/auth/login"
+                  className="btn bg-[#403f3f] text-white text-xl font-semibold py-1 px-6 rounded-none ml-2"
+               >
+                  Login
+               </Link>
+            )}
          </div>
       </div>
    )

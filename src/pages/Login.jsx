@@ -1,7 +1,26 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
+import { AuthContext } from '../provider/AuthProvider'
 
 const Login = () => {
+   const { loginExistingUsers, setUser } = useContext(AuthContext)
+
+   const handleLogin = (e) => {
+      e.preventDefault()
+      const email = e.target.email.value
+      const password = e.target.password.value
+      console.log(email, password)
+      loginExistingUsers(email, password)
+         .then((result) => {
+            const user = result.user
+            setUser(user)
+         })
+         .catch((error) => {
+            const errorCode = error.code
+            const errorMessage = error.message
+            console.log(errorCode, errorMessage)
+         })
+   }
    return (
       <div className="flex justify-center items-center h-screen">
          <div className="card bg-base-100 w-full max-w-lg shrink-0 rounded-none p-10">
@@ -9,7 +28,7 @@ const Login = () => {
                Login your account
             </h2>
             <div className="border-t border-gray-300 mt-10 mb-5"></div>
-            <form className="card-body">
+            <form onSubmit={handleLogin} className="card-body">
                <div className="form-control">
                   <label className="label flex">
                      <span className="label-text text-black text-lg mb-2">
@@ -17,6 +36,7 @@ const Login = () => {
                      </span>
                   </label>
                   <input
+                     name="email"
                      type="email"
                      placeholder="email"
                      className="input w-full input-bordered"
@@ -30,6 +50,7 @@ const Login = () => {
                      </span>
                   </label>
                   <input
+                     name="password"
                      type="password"
                      placeholder="password"
                      className="input w-full input-bordered"

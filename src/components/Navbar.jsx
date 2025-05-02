@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import login from '../assets/user.png'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 import { AuthContext } from '../provider/AuthProvider'
 
 const Navbar = () => {
@@ -11,13 +11,34 @@ const Navbar = () => {
    const links = (
       <>
          <li>
-            <Link to="/">Home</Link>
+            <NavLink
+               className={({ isActive }) =>
+                  ` ${isActive ? 'font-bold text-black' : 'text-[#706F6F]'}`
+               }
+               to="/"
+            >
+               Home
+            </NavLink>
          </li>
          <li>
-            <Link to="/career">Career</Link>
+            <NavLink
+               className={({ isActive }) =>
+                  ` ${isActive ? 'font-bold text-black' : 'text-[#706F6F]'}`
+               }
+               to="/career"
+            >
+               Career
+            </NavLink>
          </li>
          <li>
-            <Link to="/about">About</Link>
+            <NavLink
+               className={({ isActive }) =>
+                  ` ${isActive ? 'font-bold text-black' : 'text-[#706F6F]'}`
+               }
+               to="/about"
+            >
+               About
+            </NavLink>
          </li>
       </>
    )
@@ -66,9 +87,7 @@ const Navbar = () => {
             </div>
          </div>
          <div className="navbar-center hidden md:flex">
-            <ul className="menu text-[#706F6F] menu-horizontal px-1 text-lg">
-               {links}
-            </ul>
+            <ul className="space-x-8 flex px-1 text-lg">{links}</ul>
          </div>
          <div className="navbar-end">
             <img className="w-10" src={login} alt="" />

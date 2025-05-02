@@ -23,6 +23,7 @@ const Register = () => {
             const errorCode = error.code
             const errorMessage = error.message
             console.log(errorCode, errorMessage)
+            alert('Email-Already in use Firebase')
          })
    }
    return (

@@ -1,9 +1,10 @@
 import { FaEye, FaShareAlt } from 'react-icons/fa'
 import { FaRegBookmark } from 'react-icons/fa6'
 import { AiFillStar } from 'react-icons/ai'
+import { Link } from 'react-router-dom'
 
 const NewsCard = ({ news }) => {
-   const { title, author, total_view, image_url, details, rating } = news
+   const { title, _id, author, total_view, image_url, details, rating } = news
 
    return (
       <div className="border rounded-lg p-5 shadow-md bg-white mt-4">
@@ -43,9 +44,12 @@ const NewsCard = ({ news }) => {
             {details.length > 250 ? (
                <>
                   {details.slice(0, 250)}...{' '}
-                  <span className="text-orange-500 cursor-pointer">
+                  <Link
+                     to={`/news/${_id}`}
+                     className="text-orange-500 cursor-pointer"
+                  >
                      Read More
-                  </span>
+                  </Link>
                </>
             ) : (
                details

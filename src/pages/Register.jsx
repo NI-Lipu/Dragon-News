@@ -1,9 +1,11 @@
-import React, { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../provider/AuthProvider'
 
 const Register = () => {
    const { createNewUser, setUser } = useContext(AuthContext)
+   const [err, setErr] = useState('')
+   const navigate = useNavigate()
 
    const handleSubmit = (e) => {
       e.preventDefault()
@@ -12,12 +14,20 @@ const Register = () => {
       const photo = form.get('photo')
       const email = form.get('email')
       const password = form.get('password')
-      console.log({ name, photo, email, password })
+
+      // Password Validation
+      if (password.length < 6) {
+         setErr('Password Should be at least 6 digits!')
+         return
+      }
+
+      // clear error message
+      setErr('')
       createNewUser(email, password)
          .then((result) => {
             const user = result.user
             setUser(user)
-            console.log(user)
+            navigate('/')
          })
          .catch((error) => {
             const errorCode = error.code
@@ -91,6 +101,7 @@ const Register = () => {
                      required
                   />
                </div>
+               {err && <p className="text-red-500 text-lg">{err}</p>}
                <div className="form-control mt-6">
                   <button className="btn btn-neutral w-full">Register</button>
                </div>

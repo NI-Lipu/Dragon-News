@@ -14,7 +14,7 @@ const NewsDetails = () => {
             <Header></Header>
          </header>
          <main className="grid grid-cols-12 gap-4 w-11/12 mx-auto">
-            <aside className="col-span-9">
+            <section className="col-span-9">
                <h2 className="font-semibold text-xl mb-4">Dragon News</h2>
                <div className="border border-[#e7e7e7] rounded-md ">
                   <figure className="px-8 pt-8">
@@ -39,7 +39,7 @@ const NewsDetails = () => {
                      </div>
                   </div>
                </div>
-            </aside>
+            </section>
             <aside className="col-span-3">
                <RightNavbar></RightNavbar>
             </aside>

@@ -1,24 +1,33 @@
-import React, { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext, useState } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../provider/AuthProvider'
 
 const Login = () => {
    const { loginExistingUsers, setUser } = useContext(AuthContext)
-
+   const [error, setError] = useState('')
+   const location = useLocation()
+   const navigate = useNavigate()
+   // if (error) {
+   //    setError('')
+   // }
    const handleLogin = (e) => {
       e.preventDefault()
       const email = e.target.email.value
       const password = e.target.password.value
-      console.log(email, password)
+
+      // Clear previous errors
+      setError('')
+
       loginExistingUsers(email, password)
          .then((result) => {
             const user = result.user
             setUser(user)
+            navigate(location?.state ? location.state : '/')
          })
          .catch((error) => {
             const errorCode = error.code
-            const errorMessage = error.message
-            console.log(errorCode, errorMessage)
+
+            setError(errorCode)
          })
    }
    return (
@@ -57,6 +66,11 @@ const Login = () => {
                      required
                   />
                </div>
+               {error && (
+                  <p className="text-red-600 text-lg font-medium">
+                     Please enter Email or Password correctly!
+                  </p>
+               )}
                <div className="form-control mt-6">
                   <button className="btn btn-neutral w-full">Login</button>
                </div>
